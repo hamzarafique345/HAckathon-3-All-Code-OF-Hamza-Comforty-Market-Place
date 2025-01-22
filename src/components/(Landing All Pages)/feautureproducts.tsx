@@ -130,6 +130,7 @@ const Feature = () => {
               key={i}
               className="flex flex-col items-center bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-gray-400 transform transition-transform duration-300 hover:shadow-1xl"
             >
+              _id
               <Link href={`/products/${product.slug.current}`}>
                 <div className="w-full h-64 overflow-hidden">
                   {product.imageUrl ? (
