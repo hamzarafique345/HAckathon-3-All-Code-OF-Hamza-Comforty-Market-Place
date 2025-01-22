@@ -19,7 +19,7 @@ interface ProductDetailsProps {
   product: Product;
 }
 
-export default function ProductDetails({ product }: ProductDetailsProps) {
+export default  function ProductDetails({ product }: ProductDetailsProps) {
   const { dispatch } = useCart();
   const [stock, setStock] = useState(product.stock);
   const [quantity, setQuantity] = useState(1);
