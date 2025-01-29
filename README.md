@@ -5,7 +5,8 @@ Comforty is an e-commerce platform specializing in stylish and comfortable chair
 
 vercel link  web (https://h-ackathon-3-all-code-of-hamza-comforty-market-place.vercel.app/)
 
-Documentation Folder In GitHub All 1 to 7 Day(https://github.com/hamzarafique345/HAckathon-3-All-Code-OF-Hamza-Comforty-Market-Place/tree/main/.documnetation)
+Documentation Folder In GitHub All 1 to 7 Day
+(https://github.com/hamzarafique345/HAckathon-3-All-Code-OF-Hamza-Comforty-Market-Place/tree/main/.documnetation)
 
 ---
 
