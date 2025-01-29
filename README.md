@@ -1,7 +1,7 @@
 # Comforty Furniture Website System Architecture
 
 ## Overview
-Comforty is an e-commerce platform specializing in stylish and comfortable chairs for various needs. The platform is built using **Next.js 14 with TypeScript** for optimal performance and **Sanity CMS** to manage content seamlessly. This document outlines the system architecture designed for scalability, maintainability, and a superior user experience.
+Comforty is an e-commerce platform specializing in stylish and comfortable chairs for various needs. The platform is built using **Next.js 15 with TypeScript** for optimal performance and **Sanity CMS** to manage content seamlessly. This document outlines the system architecture designed for scalability, maintainability, and a superior user experience.
 
 ---
 
