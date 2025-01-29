@@ -1,7 +1,9 @@
 # Comforty Furniture Website System Architecture
 
 ## Overview
-Comforty is an e-commerce platform specializing in stylish and comfortable chairs for various needs. The platform is built using **Next.js 15 with TypeScript** for optimal performance and **Sanity CMS** to manage content seamlessly. This document outlines the system architecture designed for scalability, maintainability, and a superior user experience.
+Comforty is an e-commerce platform specializing in stylish and comfortable chairs for various needs. The platform is built using **Next.js 15 with TypeScript** for optimal performance and **Sanity CMS** to manage content seamlessly. This document outlines the system architecture designed for scalability, maintainability, and a superior user experience.   vercel link  web (https://h-ackathon-3-all-code-of-hamza-comforty-market-place.vercel.app/)
+
+Documentation Folder In GitHub All 1 to 7 Day (https://github.com/hamzarafique345/HAckathon-3-All-Code-OF-Hamza-Comforty-Market-Place/tree/main/.documnetation)
 
 ---
 
