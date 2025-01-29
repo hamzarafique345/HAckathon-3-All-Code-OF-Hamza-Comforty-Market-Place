@@ -1,9 +1,10 @@
 # Comforty Furniture Website System Architecture
 
 ## Overview
-Comforty is an e-commerce platform specializing in stylish and comfortable chairs for various needs. The platform is built using **Next.js 15 with TypeScript** for optimal performance and **Sanity CMS** to manage content seamlessly. This document outlines the system architecture designed for scalability, maintainability, and a superior user experience.   vercel link  web (https://h-ackathon-3-all-code-of-hamza-comforty-market-place.vercel.app/)
+Comforty is an e-commerce platform specializing in stylish and comfortable chairs for various needs. The platform is built using **Next.js 15 with TypeScript** for optimal performance and **Sanity CMS** to manage content seamlessly. This document outlines the system architecture designed for scalability, maintainability, and a superior user experience.  
 
-Documentation Folder In GitHub All 1 to 7 Day (https://github.com/hamzarafique345/HAckathon-3-All-Code-OF-Hamza-Comforty-Market-Place/tree/main/.documnetation)
+##vercel link  web (https://h-ackathon-3-all-code-of-hamza-comforty-market-place.vercel.app/)
+##Documentation Folder In GitHub All 1 to 7 Day(https://github.com/hamzarafique345/HAckathon-3-All-Code-OF-Hamza-Comforty-Market-Place/tree/main/.documnetation)
 
 ---
 
@@ -28,13 +29,12 @@ Documentation Folder In GitHub All 1 to 7 Day (https://github.com/hamzarafique34
 - Create a project roadmap with clear milestones.
 
 ## Day 2: System Architecture & API Integration with Sanity
-- Set up a **Next.js 14** project with **TypeScript**.
+- Set up a **Next.js 15** project with **TypeScript**.
 - Install and configure **Sanity CMS**.
 - Define and create **Sanity schemas**:
   - **Products** (name, price, stock, material, images)
   - **Orders** (order status, payment details, shipping info)
   - **Users** (login credentials, order history)
-- Test **basic API integration (GROQ queries)** to fetch data.
 
 ## Day 3: Fetch Data & Implement Frontend Pages
 - Build core frontend pages:
@@ -47,7 +47,6 @@ Documentation Folder In GitHub All 1 to 7 Day (https://github.com/hamzarafique34
 ## Day 4: Cart & Checkout Integration
 - Implement **cart functionality**:
   - Local storage for guest users
-  - Database sync for logged-in users
   - Securely collect and process payments.
   - Handle **order confirmation **.
 - Implement **checkout page with form validation**.
@@ -78,7 +77,7 @@ Documentation Folder In GitHub All 1 to 7 Day (https://github.com/hamzarafique34
 
 ### **Frontend Structure**
 - **Framework:** Next.js 14 with TypeScript for fast Server-Side Rendering (SSR) and dynamic routing.
-- **Hosting:** Deployed on **Vercel** for speed and reliability.
+- **Hosting:** Deployed on **Vercel  (https://h-ackathon-3-all-code-of-hamza-comforty-market-place.vercel.app/ )** for speed and reliability.
 
 ---
 
@@ -149,7 +148,7 @@ Sanity Studio is used for backend content management.
 ---
 
 ## **Conclusion**
-Comforty is designed to provide a seamless shopping experience with fast performance, a well-structured CMS, and secure payment and shipment tracking systems. This system architecture ensures scalability, maintainability, and a superior user experience.
+Comforty is designed to provide a seamless shopping experience with fast performance, a well-structured CMS, and payment and shipment tracking systems. This system architecture ensures scalability, maintainability, and a superior user experience.
 
 ---
 
