@@ -5,6 +5,9 @@ import { Aboutproduct, Product } from "../fetch4";
 import Link from "next/link";
 
 export default function Popular(): JSX.Element {
+
+
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true); // Loading state
   const [error, setError] = useState<string | null>(null); // Error state

@@ -185,7 +185,7 @@ export default function Newstyle() {
           <p className="text-xl text-red-500">{error}</p>
         </div>
       ) : (
-        <section className="container mx-auto px-8 sm:px-12 md:px-16 lg:px-20 py-16 max-w-screen-xl m-auto">
+        <section className=" mx-auto px-8 sm:px-12 md:px-16 lg:px-20 py-16 max-w-screen-xl m-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
             {/* Left Section: Image with vertical text */}
             <div className="relative flex items-center justify-center">

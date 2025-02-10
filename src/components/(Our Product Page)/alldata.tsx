@@ -75,6 +75,7 @@ export default function AllProductData() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
+     
         <p className="text-lg font-semibold text-teal-500">Loading products...</p>
       </div>
     );

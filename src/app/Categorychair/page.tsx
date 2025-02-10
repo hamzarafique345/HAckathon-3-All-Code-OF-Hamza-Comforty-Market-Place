@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { client } from "../../../sanity/lib/client"; // Ensure your sanity client is configured
 import Link from "next/link";
 
-export default function CategoryPage() {
+export default   function CategoryPage() {
   interface Product {
     title: string;
     price: number;

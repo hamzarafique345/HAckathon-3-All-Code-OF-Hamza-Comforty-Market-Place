@@ -19,7 +19,6 @@
 //   });
 //   const [isSubmitting, setIsSubmitting] = useState(false);
 //   const [orderSuccess, setOrderSuccess] = useState(false);
-//   const [outOfStock, setOutOfStock] = useState(false);
 
 //   const handleSubmitOrder = async (e: React.FormEvent) => {
 //     e.preventDefault();
@@ -33,14 +32,8 @@
 //       return;
 //     }
 
-//     // Check if all items in the cart are available (in stock)
-//     const areAllItemsAvailable = state.items.every((item) => item.isAvailable); 
-//     if (!areAllItemsAvailable) {
-//       setOutOfStock(true);
-//       setIsSubmitting(false);
-//       return;
-//     }
-
+//     // Assuming you're checking availability somewhere else in the code,
+//     // so we'll skip the out of stock check and proceed to success
 //     const orderItems = state.items.map((item) => ({
 //       _key: uuidv4(),
 //       slug: (item.slug as unknown as { current: string }).current ? (item.slug as unknown as { current: string }).current : item.slug,
@@ -209,29 +202,33 @@
 //         <button
 //           type="submit"
 //           disabled={isSubmitting}
-//           className={`w-full py-3 rounded-lg text-white font-semibold transition ${
-//             isSubmitting
-//               ? "bg-blue-400 cursor-not-allowed"
-//               : "bg-blue-600 hover:bg-blue-700"
-//           }`}
+//           className={`w-full py-3 rounded-lg text-white font-semibold transition ${isSubmitting ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
 //         >
 //           {isSubmitting ? "Submitting..." : "Place Order"}
 //         </button>
 //       </form>
 
-//       {/* Out of Stock Message */}
-//       {outOfStock && (
-//         <p className="mt-6 text-center text-red-600 text-lg font-semibold">
-//           Some products are out of stock and cannot be ordered.
-//         </p>
-//       )}
-
 //       {/* Order Success Message */}
-//       {orderSuccess && (
+//        {orderSuccess && (
 //         <p className="mt-6 text-center text-green-600 text-lg font-semibold">
-//           Your order was successfully placed!
+//           Your Order was successfully placed!
 //         </p>
-//       )}
+//       )} 
+
+      
+//       {orderSuccess && (
+//   <div className="mt-6 text-center">
+//     <p className="text-green-600 text-lg font-semibold">
+//       Your Order was successfully placed!
+//     </p>
+//     <p className="mt-2 text-gray-700">
+//       Your Order ID is: {createdOrderId}
+//     </p>
+//     <p className="text-gray-600">
+//       Please keep this ID for tracking your order.
+//     </p>
+//   </div>
+// )}
 //     </div>
 //   );
 // }
@@ -239,12 +236,16 @@
 
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useCart } from "../context/cardContext";  // Assuming you're using a cart context to manage state
-import { client } from "../../../sanity/lib/client"; // Sanity client to send data to the backend
+import { useCart } from "../context/cardContext";  
+import { client } from "../../../sanity/lib/client"; 
 import Image from "next/image";
+import { toast } from "react-toastify"; // Import toast
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+import { useRouter } from "next/navigation"; // Import useRouter
 
 export default function CheckoutPage() {
   const { state, dispatch } = useCart();
+  const router = useRouter(); // Initialize useRouter
   const [formData, setFormData] = useState({
     customerName: "",
     email: "",
@@ -255,24 +256,24 @@ export default function CheckoutPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
+  const [createdOrderId, setCreatedOrderId] = useState(""); // Store order ID
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Check if all fields are filled
     const isFormValid = Object.values(formData).every((field) => field.trim() !== "");
     if (!isFormValid) {
-      alert("Please fill in all the fields before placing the order.");
+      toast.error("Please fill in all the fields before placing the order.");
       setIsSubmitting(false);
       return;
     }
 
-    // Assuming you're checking availability somewhere else in the code,
-    // so we'll skip the out of stock check and proceed to success
     const orderItems = state.items.map((item) => ({
       _key: uuidv4(),
-      slug: (item.slug as unknown as { current: string }).current ? (item.slug as unknown as { current: string }).current : item.slug,
+      slug: (item.slug as unknown as { current: string }).current 
+        ? (item.slug as unknown as { current: string }).current 
+        : item.slug,
       title: item.title,
       price: item.price,
       quantity: item.quantity,
@@ -281,10 +282,7 @@ export default function CheckoutPage() {
       description: item.description,
     }));
 
-    const totalAmount = state.items.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
+    const totalAmount = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
 
     const orderData = {
       _type: "order",
@@ -296,9 +294,10 @@ export default function CheckoutPage() {
     };
 
     try {
-      await client.create(orderData);
+      const createdOrder = await client.create(orderData);
+      setCreatedOrderId(createdOrder._id); // Store the order ID
       setOrderSuccess(true);
-      dispatch({ type: "CLEAR_CART" });  // Clear cart after successful order
+      dispatch({ type: "CLEAR_CART" });
       setFormData({
         customerName: "",
         email: "",
@@ -307,8 +306,10 @@ export default function CheckoutPage() {
         city: "",
         zipCode: "",
       });
+      toast.success("Order placed successfully!");
     } catch (error) {
       console.error("Order submission failed:", error);
+      toast.error("Order submission failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -337,7 +338,7 @@ export default function CheckoutPage() {
           <tbody>
             {state.items.map((item, index) => (
               <tr key={index} className="bg-white border-b hover:bg-gray-50">
-                <td className="p-3 flex items-center">
+                <td className="p-3 flex flex-col  sm:flex-row items-center">
                   <Image
                     src={item.imageUrl}
                     alt={item.title}
@@ -375,81 +376,63 @@ export default function CheckoutPage() {
           Customer Details
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <input
-            type="text"
-            placeholder="Customer Name"
-            value={formData.customerName}
-            onChange={(e) =>
-              setFormData({ ...formData, customerName: e.target.value })
-            }
+          <input type="text" placeholder="Customer Name" value={formData.customerName}
+            onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
             className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <input
-            type="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
+          <input type="email" placeholder="Email" value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <input
-            type="tel"
-            placeholder="Phone"
-            value={formData.phone}
-            onChange={(e) =>
-              setFormData({ ...formData, phone: e.target.value })
-            }
+          <input type="tel" placeholder="Phone" value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <input
-            type="text"
-            placeholder="City"
-            value={formData.city}
-            onChange={(e) =>
-              setFormData({ ...formData, city: e.target.value })
-            }
+          <input type="text" placeholder="City" value={formData.city}
+            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
             className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+                 <input
+           type="text"
+           placeholder="Zip Code"
+           value={formData.zipCode}
+           onChange={(e) =>
+             setFormData({ ...formData, zipCode: e.target.value })
+           }
+        className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+         />
         </div>
 
-        <textarea
-          placeholder="Address"
-          value={formData.address}
-          onChange={(e) =>
-            setFormData({ ...formData, address: e.target.value })
-          }
+        <textarea placeholder="Address" value={formData.address}
+          onChange={(e) => setFormData({ ...formData, address: e.target.value })}
           className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
-        <input
-          type="text"
-          placeholder="Zip Code"
-          value={formData.zipCode}
-          onChange={(e) =>
-            setFormData({ ...formData, zipCode: e.target.value })
-          }
-          className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
-        <button
-          type="submit"
-          disabled={isSubmitting}
+        <button type="submit" disabled={isSubmitting}
           className={`w-full py-3 rounded-lg text-white font-semibold transition ${isSubmitting ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
         >
           {isSubmitting ? "Submitting..." : "Place Order"}
         </button>
       </form>
 
-      {/* Order Success Message */}
+      {/* Track Order Button */}
       {orderSuccess && (
-        <p className="mt-6 text-center text-green-600 text-lg font-semibold">
-          Your Order was successfully placed!
-        </p>
-      )}
+  <div className="flex flex-col items-center">
+    <button
+      onClick={() => router.push('/trackorder')}
+      className="mt-6 py-3 px-8 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition"
+    >
+      Track Order
+    </button>
+    <h1 className="text-center py-3 text-lg font-medium">
+      Your Order ID: <span className="font-bold">{createdOrderId}</span>
+    </h1>
+  </div>
+)}
+
     </div>
   );
 }
